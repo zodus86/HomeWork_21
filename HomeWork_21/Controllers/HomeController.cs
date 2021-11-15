@@ -28,6 +28,15 @@ namespace HomeWork_21.Controllers
             return View();
         }
 
+        [HttpGet]
+        public IActionResult Edit(int id)
+        {
+            using (var db = new DataContext())
+            {
+                return View(db.PhoneBooks.Find(id));
+            }
+        }
+
 
         [HttpPost]
         public IActionResult GetDataFromViewField(string firstName, string lastName, string middleName, decimal telephonNumber, string email, string submit)
@@ -49,20 +58,21 @@ namespace HomeWork_21.Controllers
             }
             return Redirect("~/Home/ViewAll");
         }
-        
+
         [HttpGet]
         public IActionResult Details(int id)
         {
-            
+
             using (var db = new DataContext())
             {
                 return View(db.PhoneBooks.Find(id));
             }
-                
+
         }
 
         //[HttpDelete]
-        public IActionResult Delete (int id)
+        [HttpPost]
+        public IActionResult Delete(int id)
         {
             using (var db = new DataContext())
             {
@@ -70,9 +80,28 @@ namespace HomeWork_21.Controllers
                 db.PhoneBooks.RemoveRange(vp);
                 db.SaveChanges();
             }
-
-
             return Redirect("~/Home/ViewAll");
         }
+
+
+
+        [HttpPost]
+        public IActionResult PushEdit(int id, string firstName, string lastName, string middleName, decimal telephonNumber, string email, string submit)
+        {
+            using (var db = new DataContext())
+            {
+                var pb = db.PhoneBooks.Find(id);
+                pb.FirstName = firstName;
+                pb.LastName = lastName;
+                pb.MiddleName = middleName;
+                pb.TelephonNumber = telephonNumber;
+                pb.Email = email;
+                pb.Submit = submit;
+
+                db.SaveChanges();
+            }
+            return Redirect("~/Home/ViewAll");
+        }
+
     }
 }

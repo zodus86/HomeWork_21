@@ -1,0 +1,39 @@
+﻿@model Models.PhoneBook
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Get Data</title>
+</head>
+<body>
+    <div class="brd">
+        <form action="~/Home/PushEdit" method="post">
+            <label> ID</label>
+            <input type ="number" name="id" value="@Model.Id"  readonly/>
+
+            <label>Фамилия</label>
+            <input type="text" name="lastName" value="@Model.LastName" />
+
+            <label>Имя</label>
+            <input type="text" name="firstName" value="@Model.FirstName" />
+
+            <label>Отчество</label>
+            <input type="text" name="middleName" value="@Model.MiddleName" />
+
+            <br>
+            <br />
+            <label>Телефон </label>
+            <input type="tel" name="telephonNumber" value="@Model.TelephonNumber" />
+
+            <label> Почта</label>
+            <input type="text" name="email" value="@Model.Email" />
+
+            <br>
+            <label> Примечание </label>
+            <input type="text" name="submit" value="@Model.Submit" /> <br />
+
+            <p><input type="submit" value="Изменить" /></p>
+        </form>
+    </div>
+    <hr />
+</body>
+</html>
