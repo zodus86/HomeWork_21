@@ -12,6 +12,11 @@
         [ <a href="/Home/Index">Home</a>  ]
         [ <a href="/Home/ViewAll">Список контактов</a> ]
     </header>
+   
+    <nav  class="navbar-expand-lg">
+        <div> @await Component.InvokeAsync("LogoutView") </div>
+    </nav>
+
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()
@@ -20,7 +25,7 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            
+
         </div>
     </footer>
 

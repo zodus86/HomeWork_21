@@ -12,9 +12,10 @@
     <title>ViewAll</title>
 </head>
 <body>
-<p>
-    <a href="/Home/Add" class="btn" style= "animation-delay:initial" >Добавить контакт</a>
-</p>
+    <p>
+        <a href="/Home/Add" class="btn-dark" style="animation-delay:initial">Добавить свободные поля</a>
+        <a href="/Home/AddContact" class="btn-danger" style="animation-delay:initial">Добавить типизированно</a>
+    </p>
 <table class="table">
     <thead>
         <tr>
@@ -31,7 +32,7 @@
                 @Html.DisplayNameFor(model => model.MiddleName)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.TelephonNumber)
+                @Html.DisplayNameFor(model => model.TelephonNumber )
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Email)

@@ -1,5 +1,6 @@
 ﻿using HomeWork_21.Data;
 using HomeWork_21.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -8,98 +9,81 @@ using System.Threading.Tasks;
 
 namespace HomeWork_21.Controllers
 {
+   
     public class HomeController : Controller
     {
+        private readonly IAllPhoneBooks _allPhoneBooks;
+        public HomeController(IAllPhoneBooks iallPhoneBooks)
+        {
+            _allPhoneBooks = iallPhoneBooks;
+        }
+
+       
         public IActionResult Index()
         {
             return View();
         }
-
+        
+        [HttpGet]
+        //[Authorize]
         public IActionResult ViewAll()
         {
-            ViewBag.PhoneBooks = new DataContext().PhoneBooks;
-            return View();
-        }
-
-
-        [HttpGet]
-        public IActionResult Add()
-        {
+            ViewBag.PhoneBooks = _allPhoneBooks.phoneBooks; 
             return View();
         }
 
         [HttpGet]
+        //[Authorize]
         public IActionResult Edit(int id)
         {
-            using (var db = new DataContext())
-            {
-                return View(db.PhoneBooks.Find(id));
-            }
-        }
-
-
-        [HttpPost]
-        public IActionResult GetDataFromViewField(string firstName, string lastName, string middleName, decimal telephonNumber, string email, string submit)
-        {
-            using (var db = new DataContext())
-            {
-                db.PhoneBooks.Add(
-                    new PhoneBook()
-                    {
-                        FirstName = firstName,
-                        LastName = lastName,
-                        MiddleName = middleName,
-                        TelephonNumber = telephonNumber,
-                        Email = email,
-                        Submit = submit
-                    });
-
-                db.SaveChanges();
-            }
-            return Redirect("~/Home/ViewAll");
+            return View(_allPhoneBooks.GetPhoneBook(id));
         }
 
         [HttpGet]
-        public IActionResult Details(int id)
+        //[Authorize]
+        public IActionResult AddContact()
         {
-
-            using (var db = new DataContext())
-            {
-                return View(db.PhoneBooks.Find(id));
-            }
-
+            return View(new PhoneBook());
         }
 
-        //[HttpDelete]
         [HttpPost]
+        //[Authorize]
+        public IActionResult AddContactAction(PhoneBook model)
+        {
+            _allPhoneBooks.Add(new PhoneBook()
+            {
+                LastName = model.LastName,
+                FirstName = model.FirstName,
+                MiddleName = model.MiddleName,
+                TelephonNumber = model.TelephonNumber,
+                Email = model.Email,
+                Submit = model.Submit
+            });
+            return Redirect("~/Home/ViewAll");
+        }
+
+
+        [HttpGet]
+        //[Authorize]
+        public IActionResult Details(int id)
+        {
+              return View(_allPhoneBooks.GetPhoneBook(id)); 
+        }
+
+        //[Authorize]
         public IActionResult Delete(int id)
         {
-            using (var db = new DataContext())
-            {
-                var vp = db.PhoneBooks.Where(el => el.Id == id);
-                db.PhoneBooks.RemoveRange(vp);
-                db.SaveChanges();
-            }
+            _allPhoneBooks.Delete(id);
             return Redirect("~/Home/ViewAll");
         }
 
 
 
         [HttpPost]
-        public IActionResult PushEdit(int id, string firstName, string lastName, string middleName, decimal telephonNumber, string email, string submit)
+        //[Authorize]
+        public IActionResult PushEdit(PhoneBook model)
         {
-            using (var db = new DataContext())
-            {
-                var pb = db.PhoneBooks.Find(id);
-                pb.FirstName = firstName;
-                pb.LastName = lastName;
-                pb.MiddleName = middleName;
-                pb.TelephonNumber = telephonNumber;
-                pb.Email = email;
-                pb.Submit = submit;
-
-                db.SaveChanges();
-            }
+            _allPhoneBooks.SetPB(model);
             return Redirect("~/Home/ViewAll");
         }
 

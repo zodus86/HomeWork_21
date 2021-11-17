@@ -1,7 +1,5 @@
-﻿@model Models.PhoneBook
-
-<body>
-    @using (Html.BeginForm("PushEdit", "Home", FormMethod.Post))
+﻿<body>
+    @using (Html.BeginForm("AddContactAction", "Home", FormMethod.Post))
     {
         <p>
             @Html.LabelFor(m => m.FirstName, "Имя")<br />
@@ -25,7 +23,7 @@
         </p>
         <p>
             @Html.LabelFor(m => m.TelephonNumber, "Телефон")<br />
-            @Html.TextBoxFor(m => m.TelephonNumber)
+            @Html.TextBoxFor(m => m.TelephonNumber, "", new { type = "number" })
         </p>
         <p>
             <input type="submit" value="Отправить" />

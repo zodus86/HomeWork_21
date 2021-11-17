@@ -1,0 +1,21 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+@if (User.Identity.IsAuthenticated)
+{
+<div>
+    <a class="navbar-collapse" href="~/"> Home</a>
+
+
+</div>
+}
+else
+{
+<div class="btn-group-lg">
+    <a class="navbar-brand" href="/Account/Login"> Login</a>
+    <a class="navbar-brand" href ="/Account/Register"> Registration</a>
+</div>
+}
