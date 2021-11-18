@@ -5,6 +5,19 @@ using System.Threading.Tasks;
 
 namespace WebApi.Models
 {
+    public interface IAllPhoneBooks
+    {
+        IEnumerable<PhoneBook> phoneBooks { get; }
+
+        PhoneBook GetPhoneBook(int phoneBookID);
+
+        void Add(PhoneBook phoneBook);
+
+        void Delete(int index);
+
+        void SetPB(PhoneBook phoneBook);
+    }
+
     public class PhoneBook : IPhoneBook
     {
         public int Id { get; set; }
