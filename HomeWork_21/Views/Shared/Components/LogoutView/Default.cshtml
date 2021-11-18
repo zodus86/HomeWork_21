@@ -8,7 +8,11 @@
 {
 <div>
     <a class="navbar-collapse" href="~/"> Home</a>
-
+    <a class="navbar-brand" herf="#">@User.Identity.Name в системе</a>
+    
+    <form method="post" asp-controller="Account" asp-action="Logout" id="logoutform" asp-antiforgery="true">
+        <a class="navbar-brand" href="#" onclick="document.getElementById('logoutform').submit()">Выход</a>
+    </form>
 
 </div>
 }

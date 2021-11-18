@@ -1,7 +1,9 @@
 using HomeWork_21.Data;
 using HomeWork_21.Data.AuthApp;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -31,9 +33,7 @@ namespace HomeWork_21
             services.AddMvc();
 
 
-
             services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<DataContext>().AddDefaultTokenProviders();
-
             services.Configure<IdentityOptions>(options =>
             {
                 options.Password.RequiredLength = 6;
@@ -41,7 +41,6 @@ namespace HomeWork_21
                 options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(10);
                 options.Lockout.AllowedForNewUsers = true;
             });
-
             services.ConfigureApplicationCookie(option =>
             {
                 //option.Cookie.HttpOnly = true;
@@ -56,18 +55,21 @@ namespace HomeWork_21
 
         public void Configure(IApplicationBuilder app)
         {
-           //app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseRouting();
             app.UseAuthentication();
-            //app.UseAuthorization();
+            app.UseAuthorization();
             
+            app.UseExceptionHandler(a => a.Run(async context =>
+            {
+                var exceptionHandlerPathFeature = context.Features.Get<IExceptionHandlerPathFeature>();
+                var exception = exceptionHandlerPathFeature.Error;
+                await context.Response.WriteAsJsonAsync(new { error = exception.Message });
+            }));
+
             app.UseEndpoints(endpoints =>
             {
-                //endpoints.MapRazorPages();
-                endpoints.MapControllerRoute(
-                    name : "default", 
-                    pattern: "{controller=Home}/{action=Index}") ;
+                endpoints.MapControllerRoute("default", "{controller=Home}/{action=Index}") ;
             });
         }
     }

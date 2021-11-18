@@ -25,12 +25,10 @@ namespace CarViewApp.Controllers
         [HttpGet]
         public IActionResult Login(string returnUrl)
         {
-            //return View(new UserLogin()
-            //{
-            //    ReturnUrl = returnUrl
-            //});
-            return View(new UserLogin());
-
+            return View(new UserLogin()
+            {
+                ReturnUrl = returnUrl
+            });
         }
 
         [HttpPost, ValidateAntiForgeryToken]
@@ -49,10 +47,8 @@ namespace CarViewApp.Controllers
                     {
                         return Redirect(model.ReturnUrl);
                     }
-
                     return RedirectToAction("Index", "Home");
                 }
-
             }
 
             ModelState.AddModelError("", "Пользователь не найден");
