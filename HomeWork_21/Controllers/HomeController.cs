@@ -25,7 +25,7 @@ namespace HomeWork_21.Controllers
         }
         
         [HttpGet]
-        //[Authorize]
+        [Authorize]
         public IActionResult ViewAll()
         {
             ViewBag.PhoneBooks = _allPhoneBooks.phoneBooks; 
@@ -33,21 +33,21 @@ namespace HomeWork_21.Controllers
         }
 
         [HttpGet]
-        //[Authorize]
+        [Authorize]
         public IActionResult Edit(int id)
         {
             return View(_allPhoneBooks.GetPhoneBook(id));
         }
 
         [HttpGet]
-        //[Authorize]
+        [Authorize]
         public IActionResult AddContact()
         {
             return View(new PhoneBook());
         }
 
         [HttpPost]
-        //[Authorize]
+        [Authorize]
         public IActionResult AddContactAction(PhoneBook model)
         {
             _allPhoneBooks.Add(new PhoneBook()
@@ -64,13 +64,13 @@ namespace HomeWork_21.Controllers
 
 
         [HttpGet]
-        //[Authorize]
+        [Authorize]
         public IActionResult Details(int id)
         {
               return View(_allPhoneBooks.GetPhoneBook(id)); 
         }
 
-        //[Authorize]
+        [Authorize]
         public IActionResult Delete(int id)
         {
             _allPhoneBooks.Delete(id);
@@ -80,7 +80,7 @@ namespace HomeWork_21.Controllers
 
 
         [HttpPost]
-        //[Authorize]
+        [Authorize]
         public IActionResult PushEdit(PhoneBook model)
         {
             _allPhoneBooks.SetPB(model);
